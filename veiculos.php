@@ -4,6 +4,8 @@ session_start();
 
 require "banco.php";
 
+$exibir_tabela = true;
+
 if (array_key_exists('placa', $_GET) && $_GET['placa'] != '') {
     $veiculo = [];
 
@@ -35,6 +37,15 @@ if (array_key_exists('placa', $_GET) && $_GET['placa'] != '') {
 
     gravar_veiculo($conexao, $veiculo);
 }
+
+$veiculo = [
+    'id' => 0,
+    'placa' => '',
+    'marca' => '',
+    'modelo' => '',
+    'hora_entrada' => '',
+    'hora_saida' => ''   
+];
 
 $lista_veiculos = listar_veiculos($conexao);
 

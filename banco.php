@@ -37,3 +37,30 @@ function gravar_veiculo($conexao, $veiculo)
             ";
     mysqli_query($conexao, $sqlQuery);
 }
+
+function buscar_veiculo($conexao, $id)
+{
+    $sqlQuery = "SELECT * FROM veiculos WHERE id=".$id;
+    $resultado = mysqli_query($conexao, $sqlQuery);
+
+    return mysqli_fetch_assoc($resultado);
+}
+
+function editar_veiculo($conexao, $veiculo)
+{
+    $sqlQuery = "UPDATE veiculos SET
+            placa = '{$veiculo['placa']}',
+            marca = '{$veiculo['marca']}',
+            modelo = '{$veiculo['modelo']}'
+        WHERE id = {$veiculo['id']}
+    ";
+
+    mysqli_query($conexao, $sqlQuery);
+}
+
+function remover_veiculo($conexao, $id)
+{
+    $sqlQuery = "DELETE FROM veiculos WHERE id=".$id;
+
+    mysqli_query($conexao, $sqlQuery);
+}
