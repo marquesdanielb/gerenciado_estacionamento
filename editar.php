@@ -3,36 +3,54 @@
 session_start();
 
 require "banco.php";
+require "ajudantes.php";
 
 $exibir_tabela = false;
 
-if (array_key_exists('placa', $_GET) && $_GET['placa'] != '') {
+$tem_erros = false;
+$erros_validacao = [];
+
+if (tem_post()) {
     $veiculo = [
-        'id' => $_GET['id'],
+        'id' => $_POST['id'],
         'placa' => '',
         'marca' => '',
         'modelo' => '',
-        'hora_entrada' => $_GET['hora_entrada'],
-        'hora_saida' => $_GET['hora_saida']        
+        'hora_entrada' => $_POST['hora_entrada'],
+        'hora_saida' => $_POST['hora_saida']        
     ];
 
-    if (array_key_exists('placa', $_GET)) {
-        $veiculo['placa'] = $_GET['placa'];
+    if (array_key_exists('placa', $_POST) && $_POST['placa'] != '') {
+        if (valida_placa($_POST['placa'])) {
+            $veiculo['placa'] = $_POST['placa'];
+        }else {
+            $tem_erros = true;
+            $erros_validacao['placa'] = 'O formato da placa deverá ser informado no padrão XXX-XXXX';
+        }
+    }elseif ($_POST['placa'] == '') {
+            $tem_erros = true;
+            $erros_validacao['placa'] = 'A placa é uma informação obrigatória'; 
     }
 
-    if (array_key_exists('marca', $_GET)) {
-        $veiculo['marca'] = $_GET['marca'];
+    if (array_key_exists('marca', $_POST)) {
+        $veiculo['marca'] = $_POST['marca'];
     }
 
-    if (array_key_exists('modelo', $_GET)) {
-        $veiculo['modelo'] = $_GET['modelo'];
+    if (array_key_exists('modelo', $_POST)) {
+        $veiculo['modelo'] = $_POST['modelo'];
     }
 
-    editar_veiculo($conexao, $veiculo);
-    header('Location: veiculos.php');
-    die();
+    if (!$tem_erros) {
+        editar_veiculo($conexao, $veiculo);
+        header('Location: veiculos.php');
+        die();
+    }
 }
 
 $veiculo = buscar_veiculo($conexao, $_GET['id']);
+
+$veiculo['placa'] = (array_key_exists('placa', $_POST)) ? $_POST['placa'] : $veiculo['placa'];
+$veiculo['marca'] = (array_key_exists('marca', $_POST)) ? $_POST['marca'] : $veiculo['marca'];
+$veiculo['modelo'] = (array_key_exists('modelo', $_POST)) ? $_POST['modelo'] : $veiculo['modelo'];
 
 require "template.php";

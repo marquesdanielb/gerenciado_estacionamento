@@ -1,8 +1,13 @@
-<form>
+<form method="POST">
     <input type="hidden" name="id" value="<?php echo $veiculo['id']; ?>">
     <fieldset>
         <label>
             Placa:
+            <?php if($tem_erros && array_key_exists('placa', $erros_validacao)) : ?>
+                <span class="erro">
+                    <?php echo $erros_validacao['placa']; ?>
+                </span>
+            <?php endif; ?>
             <input type="text" name="placa" value="<?php echo $veiculo['placa']; ?>">                
         </label>
         <label>
@@ -21,6 +26,6 @@
             Hora da saída:
             <input type="time" name="hora_saida" value="<?php echo $veiculo['hora_saida']; ?>">                
         </label>
-        <input type="submit" value="cadastrar">
+        <input type="submit" value="Cadastrar">
     </fieldset>
 </form>
