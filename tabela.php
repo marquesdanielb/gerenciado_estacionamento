@@ -9,7 +9,11 @@
     </tr>
         <?php foreach($lista_veiculos as $veiculo) : ?>
             <tr>
-                <td><?php echo $veiculo['placa'];?></td>
+                <td>
+                    <a href="veiculo.php?id=<?php echo $veiculo['id']; ?> ">
+                        <?php echo $veiculo['placa'];?>
+                    </a>
+                </td>
                 <td><?php echo $veiculo['marca'];?></td>
                 <td><?php echo $veiculo['modelo'];?></td>
                 <td><?php echo $veiculo['hora_entrada'];?></td>
