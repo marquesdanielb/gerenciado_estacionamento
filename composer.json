@@ -1,0 +1,17 @@
+{
+    "name": "marquesdanielb/estacionamento",
+    "description": "Um sistema de cadastro para estacionamento",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Estacionamento\\Models\\": "models"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Marques Barbosa",
+            "email": "marquesdanielb@gmail.com"
+        }
+    ],
+    "require": {}
+}
